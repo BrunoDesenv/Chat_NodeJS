@@ -10,8 +10,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-
 var app = express();
 
 // view engine setup
@@ -48,8 +46,10 @@ app.use(function(err, req, res, next) {
 });
 
 require('./auth')(passport);
+
 app.use(session({  
   store: new MongoStore({
+    //url: 'mongodb://localhost:27017/chatdemo',
     db: global.db,
     ttl: 30 * 60 // = 30 minutos de sessão
   }),
