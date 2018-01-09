@@ -16,5 +16,19 @@ router.post('/signup', function(req, res, next){
     res.redirect('/')
   })
 })
- 
+
+router.post('/forgot', function(req, res, next) {
+  db.findUser(req.body.email, (err, doc) => {
+    if(err || !doc) res.redirect('/')//manda pro login mesmo que não ache
+    const newpass = require('../utils').generatePassword()
+    db.changePassword(req.body.email, newpass)
+    require('../mail')(req.body.email, 'Sua nova senha do chat', 'Olá ' + doc.username + ', sua nova senha é ' + newpass)
+    res.redirect('/')
+  })
+})
+
+router.get('/forgot', function(req, res, next) {
+  res.render('forgot', { });
+})
+
 module.exports = router;
