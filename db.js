@@ -4,5 +4,15 @@ function createUser(username, password, email, callback){
         callback(err, result)
     })
 }
+
+function findUser(email, callback){
+    global.db.collection("users").findOne({email}, callback)
+}
  
-module.exports = { createUser }
+function changePassword(email, password){
+    const cryptPwd = bcrypt.hashSync(password, 10)
+    global.db.collection("users").updateOne({email}, {$set:{password: cryptPwd}})
+}
+ 
+module.exports = { createUser, findUser, changePassword }
+ 

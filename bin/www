@@ -8,8 +8,6 @@ var app = require('../app');
 var debug = require('debug')('chatdemo:server');
 var http = require('http');
 
-
-
 /**
  * Get port from environment and store in Express.
  */
@@ -20,12 +18,16 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-
 require('dotenv-safe').load();
+
 const mongoClient = require("mongodb").MongoClient;
 mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
  
-  if(err) { return console.log(err); }
+  if(err) 
+  { 
+    return console.log(err); 
+  }
+  
   console.log("conectou no banco de dados!");
   global.db = conn.db(process.env.MONGO_DB);
 
